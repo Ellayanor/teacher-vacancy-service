@@ -9,7 +9,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   context 'attempting to edit a draft vacancy' do
     scenario 'redirects to the review vacancy page' do
       vacancy = create(:vacancy, :draft, school: school)
-      visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+      visit edit_school_vacancy_path(school, vacancy.id)
 
       expect(page).to have_content("Review the vacancy for #{school.name}")
     end
@@ -18,7 +18,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   context 'navigation' do
     scenario 'links to the school page' do
       vacancy = create(:vacancy, :published, school: school)
-      visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+      visit edit_school_vacancy_path(school, vacancy.id)
 
       click_on school.name
       expect(page).to have_content("Vacancies at #{school.name}")
@@ -28,7 +28,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   context 'editing a published vacancy' do
     scenario 'takes your to the edit page' do
       vacancy = create(:vacancy, :published, school: school)
-      visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+      visit edit_school_vacancy_path(school, vacancy.id)
 
       expect(page).to have_content("Edit vacancy for #{school.name}")
     end
@@ -36,7 +36,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     context '#job_specification' do
       scenario 'can not be edited when validation fails' do
         vacancy = create(:vacancy, :published, school: school)
-        visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+        visit edit_school_vacancy_path(school, vacancy.id)
 
         expect(page).to have_content("Edit vacancy for #{school.name}")
         click_link_in_container_with_text('Job title')
@@ -49,7 +49,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
-        visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+        visit edit_school_vacancy_path(school, vacancy.id)
         click_link_in_container_with_text('Job title')
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
@@ -63,7 +63,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     context '#candidate_specification' do
       scenario 'can not be edited when validation fails' do
         vacancy = create(:vacancy, :published, school: school)
-        visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+        visit edit_school_vacancy_path(school, vacancy.id)
 
         expect(page).to have_content("Edit vacancy for #{school.name}")
         click_link_in_container_with_text(I18n.t('vacancies.experience'))
@@ -78,7 +78,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
-        visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+        visit edit_school_vacancy_path(school, vacancy.id)
         click_link_in_container_with_text(I18n.t('vacancies.qualifications'))
 
         fill_in 'candidate_specification_form[qualifications]', with: 'Teaching deegree'
@@ -92,7 +92,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     context '#application_details' do
       scenario 'can not be edited when validation fails' do
         vacancy = create(:vacancy, :published, school: school)
-        visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+        visit edit_school_vacancy_path(school, vacancy.id)
 
         expect(page).to have_content("Edit vacancy for #{school.name}")
         click_link_in_container_with_text(I18n.t('vacancies.application_link'))
@@ -107,7 +107,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
-        visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+        visit edit_school_vacancy_path(school, vacancy.id)
         click_link_in_container_with_text(I18n.t('vacancies.application_link'))
 
         fill_in 'application_details_form[application_link]', with: 'https://tvs.com'
