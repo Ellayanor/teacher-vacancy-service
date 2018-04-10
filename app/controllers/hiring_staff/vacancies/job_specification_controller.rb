@@ -9,11 +9,11 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   # rubocop:disable Metrics/AbcSize
   def create
-    @job_specification_form = JobSpecificationForm.new(job_specification_form)
+    @job_specification_form = JobSpecificationForm.new(sanitised_job_specification_form)
     store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
 
     if @job_specification_form.valid?
-      vacancy = session_vacancy_id ? update_vacancy(job_specification_form) : save_vacancy_without_validation
+      vacancy = session_vacancy_id ? update_vacancy(sanitised_job_specification_form) : save_vacancy_without_validation
       store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
 
       redirect_to_next_step(vacancy)
@@ -45,6 +45,13 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   private
+
+  def sanitised_job_specification_form
+    hash = job_specification_form.to_hash
+    hash["minimum_salary"].gsub(/[^\d,\.]/, '').gsub!(',', '')
+    hash["maximum_salary"].gsub(/[^\d,\.]/, '').gsub!(',', '')
+    hash
+  end
 
   def job_specification_form
     params.require(:job_specification_form).permit(:job_title, :job_description, :leadership_id,
