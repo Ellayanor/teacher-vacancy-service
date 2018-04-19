@@ -6,7 +6,8 @@ class Permission
     '7d842528-52c8-49db-9deb-6bd4d9aaf7c8' => '111692', # fiona@
     'd486e1aa-180c-4871-8c26-f12a590cdac3' => '137060', # tolworthtest@
     '64f35537-9d8f-468d-ab81-e73ba328970e' => '137060', # tolworth@
-    'e72e5b58-3cfb-4c48-a47a-d0635983bdfc' => '138177'
+    'e72e5b58-3cfb-4c48-a47a-d0635983bdfc' => '138177',
+    'e05f9fad-ad81-4eb7-b2f8-f3b5aa5e7d47' => '131757'  # parkview@
   }.freeze
 
   def initialize(identifier:)
