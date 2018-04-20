@@ -79,6 +79,6 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
   end
 
   def valid_website(url)
-    url.match?(/^http/) ? url : "http://#{url}"
+    Addressable::URI.heuristic_parse(url).to_s
   end
 end
