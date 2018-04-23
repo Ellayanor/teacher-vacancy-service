@@ -36,7 +36,7 @@
 
       %fieldset.form-group#salary_range
         %label.form-label.form-label-bold= t('vacancies.salary_range')
-        %span.form-hint= t('vacancies.form_hints.salary_range')
+        %span.form-hint= t('vacancies.form_hints.salary_range', amount: SalaryValidator::MIN_SALARY_ALLOWED)
 
         = f.input :minimum_salary,
                   required: true,
